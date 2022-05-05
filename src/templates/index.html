@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block body %}
-    <p class="text">
-        Hello world!
-    </p>
+    {% for song in songs %}
+        <div>
+            <p>
+                {{ song.id }} | {{ song.title }}
+            </p>
+        </div>
+    {% endfor %}
 {% endblock %}

@@ -17,12 +17,24 @@ class Song(db.Model):
     genre = relationship('Genre', backref=backref('parent', uselist=False))
     duration = db.Column(db.Integer)
 
+    def __init__(self, title, artist, song_url, img_url, genre, duration):
+        self.title = title
+        self.artist = artist
+        self.artist_id = artist.id
+        self.song_url = song_url
+        self.img_url = img_url
+        self.genre = genre
+        self.genre_id = genre.id
+        self.duration = duration
+
     def __repr__(self):
         return f"<Song(" \
                f"title={self.title}, " \
                f"genre={self.genre}, " \
                f"duration={self.duration})" \
                f"[{self.id}]>"
+
+    __table_args__ = {'extend_existing': True}
 
 
 class Artist(db.Model):
@@ -31,10 +43,15 @@ class Artist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
 
+    def __init__(self, name):
+        self.name = name
+
     def __repr__(self):
         return f"<Artist(" \
                f"name={self.name})" \
                f"[{self.id}]>"
+
+    __table_args__ = {'extend_existing': True}
 
 
 class Genre(db.Model):
@@ -43,7 +60,12 @@ class Genre(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String(255))
 
+    def __init__(self, type):
+        self.type = type
+
     def __repr__(self):
         return f"<Genre(" \
                f"type={self.type})" \
                f"[{self.id}]>"
+
+    __table_args__ = {'extend_existing': True}
