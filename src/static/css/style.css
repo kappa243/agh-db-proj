@@ -1,0 +1,64 @@
+html {
+    position: relative;
+    min-height: 100vh;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 1.4rem;
+    background: #d5eaf6;
+}
+
+header {
+    height: 50px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 1.8rem;
+
+    position: sticky;
+    top: 0;
+
+    background: #294448;
+    color: #d3dadc;
+}
+
+.header {
+    text-align: center;
+}
+
+
+footer {
+    height: 50px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 1.2rem;
+
+    position: fixed;
+    bottom: 0;
+
+    overflow: hidden;
+
+    background: #3b666e;
+    color: #dde5e7;
+}
+
+.footer {
+    padding: 10px;
+}
+
+.main {
+    font-size: 1.2rem;
+
+    margin: 0;
+    padding: 25px;
+
+    bottom: 50px;
+    overflow: hidden;
+}
+
+/*.main > * {*/
+/*    margin: 25px;*/
+/*}*/
