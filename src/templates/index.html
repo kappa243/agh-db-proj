@@ -1,11 +1,5 @@
 {% extends 'base.html' %}
 
 {% block body %}
-    {% for song in songs %}
-        <div>
-            <p>
-                {{ song.id }} | {{ song.title }}
-            </p>
-        </div>
-    {% endfor %}
+    {% include 'songs.html' %}
 {% endblock %}

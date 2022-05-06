@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from config import DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE
+from player import getSongsJson
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -12,41 +13,23 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 from models import Song, Artist, Genre
+from scripts.load_data import initData
 
 
 @app.route('/')
 def index():
     songs = Song.query.all()
+    variables = getSongsJson(songs)
 
-    return render_template('index.html', songs=songs)
+    context = {'songs': songs, 'variables': variables}
+    return render_template('index.html', songs=songs, variables=variables)
 
 
 @app.route('/add_song', methods=['POST', 'GET'])
 def add_song():
     if request.method == "POST":
-        if 'add-song'in request.form:
-            title = request.form['title']
-            artist_n = request.form['artist']
-            genre_t = request.form['genre']
-            songurl = request.form['songurl']
-            imgurl = request.form['imgurl']
-            duration = request.form['duration']
-
-            genre = Genre(type=genre_t)
-            artist = Artist(name=artist_n)
-            song = Song(
-                title=title,
-                artist=artist,
-                song_url=songurl,
-                img_url=imgurl,
-                genre=genre,
-                duration=duration
-            )
-
-            db.session.add(genre)
-            db.session.add(artist)
-            db.session.add(song)
-            db.session.commit()
+        if 'add-song' in request.form:
+            initData(db)
 
     return render_template('add_song.html')
 
