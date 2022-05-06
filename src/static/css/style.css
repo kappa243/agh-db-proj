@@ -10,6 +10,10 @@ html {
     min-height: 100vh;
 }
 
+a {
+    text-decoration: none;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -20,10 +24,15 @@ body {
 }
 
 header {
-    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    height: 80px;
     width: 100%;
     margin: 0;
-    padding: 0;
+    padding: 15px 25px 0px 25px;
+    box-sizing: border-box;
     font-size: 1.8rem;
 
     position: sticky;
@@ -34,10 +43,67 @@ header {
     color: #d3dadc;
 }
 
+#site-name {
+    text-decoration: none;
+    color: #d3dadc;
+    margin: 0 25px 0 25px;
+}
+
+.spacer {
+    width: 100%;
+}
+
 .header {
     text-align: center;
 }
 
+.query {
+    width: 100%;
+}
+
+.query form {
+    display: flex;
+    flex-direction: row;
+    column-gap: 15px;
+
+    margin-top: 10px;
+    height: 40px;
+    width: 100%;
+}
+
+.query input {
+    height: 30px;
+    width: 300px;
+    border: 0;
+    padding: 5px;
+    border-radius: 5px;
+
+    line-height: 40px;
+    font-size: 1.2rem;
+    outline: none;
+}
+
+.query button {
+    height: 40px;
+    width: 40px;
+    flex-shrink: 0;
+
+    border: 0;
+    border-radius: 5px;
+
+    background: #4193a1;
+    color: white;
+
+    transition: 0.3s;
+}
+
+.query button:hover {
+    background: #387a85;
+}
+
+.query button .fa {
+    font-size: 1.2rem;
+}
 
 footer {
     height: 50px;
@@ -667,6 +733,49 @@ div#white-player-controls div#repeat.amplitude-repeat-on {
 }
 
 
+.search-results {
+    width: 100%;
+    display: flex;
+    padding: 25px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.song-search, .artist-search, .playlist-search {
+    padding: 10px;
+}
+
+.title {
+    font-size: 1.4rem;
+    font-weight: bolder;
+}
+
+.item {
+    margin-left: 20px;
+    color: black;
+    transition: 0.3s;
+}
+
+.item:hover {
+    color: var(--primary-player);
+}
+
+
+.artist-name {
+    width: 100%;
+    margin-top: 25px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.artist-name span {
+    background: white;
+    border: 3px var(--primary-player) solid;
+    border-radius: 5px;
+    padding: 10px;
+}
+
 @media only screen and (max-width: 600px) {
     div#white-player-center {
         display: flex;
@@ -713,4 +822,13 @@ div#white-player-controls div#repeat.amplitude-repeat-on {
         margin-left: -5px;
         margin-top: 15px;
     }
+
+    #site-name, .spacer {
+        display: none;
+    }
+
+    .query input {
+        width: 100%;
+    }
+
 }

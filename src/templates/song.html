@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    <div class="song" style="text-align: center">
+        {{ song.title }} id[{{ song.id }}]
+        <img height="100px" width="100px" src="{{ url_for('static', filename='res/' + song.img_url) }}">
+    </div>
+
+
+
+    {% include 'songs.html' %}
+
+{% endblock body %}
