@@ -89,7 +89,7 @@ class Playlist(db.Model):
     name = db.Column(db.String(255))
     user_id = db.Column(db.Integer, db.ForeignKey('User.id', ondelete='CASCADE'))
     user = relationship("User")
-    playlist_details = relationship("PlaylistDetail", back_populates="playlist")
+    playlist_details = relationship("PlaylistDetail", cascade="all, delete", back_populates="playlist")
     is_private = db.Column(db.Boolean)
 
     __table_args__ = {'extend_existing': True}

@@ -1,6 +1,6 @@
 from itertools import chain
 
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager, login_required, current_user
@@ -78,7 +78,9 @@ def search():
 @app.route('/song/<id>', methods=['GET', 'POST'])
 @login_required
 def song(id):
-    song = Song.query.filter_by(id=id).first()
+    song = Song.query.get(int(id))
+    if song is None:
+        return redirect(url_for('index'))
     variables = getSongsJson([song])
 
     user = User.query.get(int(current_user.get_id()))
@@ -135,6 +137,7 @@ def playlists():
             if playlist.user == user:
                 db.session.delete(playlist)
                 db.session.commit()
+                return redirect(url_for('playlists'))
 
         elif 'follow-playlist' in request.form:
             playlist_id = int(request.form['follow-playlist'])
@@ -190,6 +193,7 @@ def playlist(id):
             if playlist.user == user:
                 db.session.delete(playlist)
                 db.session.commit()
+                return redirect(url_for('playlists'))
 
         elif 'follow-playlist' in request.form:
             playlist_id = int(request.form['follow-playlist'])
@@ -228,6 +232,8 @@ def playlist(id):
     followed_ids = list(map(lambda pl: pl.playlist_id, user.playlists))
 
     playlist = Playlist.query.get(int(id))
+    if playlist is None:
+        return redirect(url_for('index'))
     if playlist.is_private and playlist.id not in followed_ids:
         playlist = None
 
