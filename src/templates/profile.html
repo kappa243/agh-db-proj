@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block body %}
- <div>
- Welcome {{ name }}!
- </div>
+    <div class="profile">
+        <div class="profile-welcome">
+           Welcome <span>{{ user.username }}</span>!
+        </div>
+    </div>
 {% endblock %}

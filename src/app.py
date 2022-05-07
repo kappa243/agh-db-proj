@@ -24,7 +24,7 @@ login_manager.init_app(app)
 from auth import auth
 
 app.register_blueprint(auth, url_prefix='/')
-print("sfdfs")
+
 
 @login_manager.user_loader
 def load_user(user_id):
