@@ -162,12 +162,10 @@ footer {
     background: white;
     cursor: pointer;
 
-    scale: 1;
     transition: 0.2s ease-out;
 }
 
 .amplitude-song-container:hover {
-    scale: 1.03;
     box-shadow: 2px 2px 7px #799494;
 }
 
