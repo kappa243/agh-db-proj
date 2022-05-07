@@ -27,11 +27,12 @@ header {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
 
     height: 80px;
     width: 100%;
     margin: 0;
-    padding: 15px 25px 0px 25px;
+    padding: 0 25px 0 25px;
     box-sizing: border-box;
     font-size: 1.8rem;
 
@@ -103,6 +104,29 @@ header {
 
 .query button .fa {
     font-size: 1.2rem;
+}
+
+.navbar {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    column-gap: 20px;
+}
+
+.navbar a {
+    font-size: 1.2rem;
+    color: white;
+    background: var(--secondary-player);
+    border-radius: 5px;
+
+    padding: 5px 10px 5px 10px;
+    transition: 0.3s;
+}
+
+.navbar a:hover {
+    background: var(--primary-player);
 }
 
 footer {
@@ -178,12 +202,12 @@ footer {
     justify-content: space-between;
 }
 
-.song-basic a{
+.song-basic a {
     color: black;
     transition: 0.3s;
 }
 
-.song-basic a:hover{
+.song-basic a:hover {
     color: var(--primary-player)
 }
 
@@ -815,13 +839,101 @@ div#white-player-controls div#repeat.amplitude-repeat-on {
     font-size: 1.4rem;
 }
 
-.song-item .song-item-details .song-item-artist a{
+.song-item .song-item-details .song-item-artist a {
     color: black;
     transition: 0.3s;
 }
 
-.song-item .song-item-details .song-item-artist a:hover{
+.song-item .song-item-details .song-item-artist a:hover {
     color: var(--primary-player);
+}
+
+.notification {
+    color: red;
+}
+
+.register, .login {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    width: 500px;
+    height: auto;
+    margin: 50px auto;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.register span, .login span {
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+.register form, .login form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    margin: 10px 0;
+}
+
+.register form > div, .login form > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+}
+
+.register form > div label, .login form > div label {
+    width: 100%;
+    text-align: left;
+}
+
+.register form > div > input, .login form > div > input {
+    width: 100%;
+}
+
+.register form > div > div, .login form > div > div {
+    width: 100%;
+    height: 100%;
+}
+
+.register form button, .login form button {
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    background: var(--primary-player);
+    color: white;
+    transition: 0.3s;
+    height: 40px;
+    width: 90px;
+    align-self: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.register form button:hover, .login form button:hover {
+    background: var(--secondary-player);
+}
+
+.profile {
+    background: white;
+    border-radius: 10px;
+    margin: 50px auto;
+    padding: 25px;
+    width: 500px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile .profile-welcome {
+    font-size: 1.6rem;
+}
+
+.profile .profile-welcome span {
+    font-weight: 900;
 }
 
 @media only screen and (max-width: 600px) {

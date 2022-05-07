@@ -17,12 +17,14 @@ migrate = Migrate(app, db)
 from models import Song, Artist, Genre, User
 from scripts.load_data import initData
 
-from auth import auth
-app.register_blueprint(auth, url_prefix='/')
-
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 login_manager.init_app(app)
+
+from auth import auth
+
+app.register_blueprint(auth, url_prefix='/')
+
 
 @login_manager.user_loader
 def load_user(user_id):

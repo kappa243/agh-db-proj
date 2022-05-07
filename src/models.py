@@ -6,10 +6,12 @@ from app import db
 
 class User(UserMixin, db.Model):
     __tablename__ = 'User'
+
     id = db.Column(db.Integer, primary_key=True)
     password = db.Column(db.String(1000))
     username = db.Column(db.String(50), unique=True)
     __table_args__ = {'extend_existing': True}
+
 
 class Song(db.Model):
     __tablename__ = 'Song'

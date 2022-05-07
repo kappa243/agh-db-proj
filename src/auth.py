@@ -2,9 +2,10 @@ from flask import Blueprint, request, render_template, flash, redirect, url_for
 from flask_login import login_user, login_required, current_user, logout_user
 from models import User
 from werkzeug.security import generate_password_hash, check_password_hash
-from app import db
+from app import db, login_manager
 
 auth = Blueprint('auth', __name__)
+
 
 @auth.route('/login', methods=['POST', 'GET'])
 def login_post():
@@ -19,13 +20,15 @@ def login_post():
                 flash('Please check your login details and try again.')
                 return render_template('login.html')
             login_user(user)
-            return redirect(url_for('auth.profile'))
+            return redirect(url_for('index'))
 
     return render_template('login.html')
 
 
 @auth.route('/register', methods=['POST', 'GET'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('auth.profile'))
     if request.method == "POST":
         if 'register_data' in request.form:
             username = request.form['username']
@@ -46,6 +49,7 @@ def register():
                 db.session.add(newUser)
                 db.session.commit()
                 print(username, password1, password2)
+                return redirect(url_for('auth.login_post'))
 
     return render_template('register.html')
 
@@ -54,9 +58,15 @@ def register():
 @login_required
 def logout():
     logout_user()
-    return render_template('login.html')
+    return redirect(url_for('index'))
+
 
 @auth.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', name=current_user.username)
+    return render_template('profile.html', user=current_user)
+
+
+@login_manager.unauthorized_handler
+def unauthorized_callback():
+    return redirect('/login')
