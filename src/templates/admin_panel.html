@@ -45,6 +45,9 @@
             {% endif %}
             <button type="submit" name="edit_user" value="{{ user.username }}">Edit</button>
         </form>
+        <form method="POST">
+            <button type="submit" name="delete" value="{{ user.username }}">Delete user</button>
+        </form>
     </div>
 {% endfor %}
 {% else %}
