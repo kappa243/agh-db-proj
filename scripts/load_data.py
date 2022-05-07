@@ -1,6 +1,6 @@
 import csv
 
-from models import Song, Genre, Artist
+from models import Song, Genre, Artist, User
 
 
 def toGenre(name):

@@ -714,3 +714,7 @@ div#white-player-controls div#repeat.amplitude-repeat-on {
         margin-top: 15px;
     }
 }
+
+.navbar {
+    display: flex;
+}

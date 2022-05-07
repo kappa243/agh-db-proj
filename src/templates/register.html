@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="notification is-danger">
+            {{ messages[0] }}
+        </div>
+        {% endif %}
+    {% endwith %}
+    <h3>Register</h3>
+    <form method="POST">
+        <div>
+            <label for="username">Username</label>
+            <input
+                type="text"
+                id = "username"
+                name="username"
+                placeholder="Enter username"
+            >
+        </div>
+        <div>
+            <label for="password1">Password</label>
+            <input
+                type="password"
+                id="password1"
+                name="password1"
+                placeholder="Enter password"
+            >
+        </div>
+        <div>
+            <label for="password2">Password</label>
+            <input
+                type="password"
+                id="password2"
+                name="password2"
+                placeholder="Enter password"
+            >
+        </div>
+        <button type="submit" name="register_data">Submit</button>
+    </form>
+{% endblock %}
