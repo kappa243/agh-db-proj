@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="search-results">
+        {% if songs or artists or playlists %}
+            {% if songs %}
+                <div class="song-search">
+                    <p class="title">Songs:</p>
+                    {% for song in songs %}
+                        <a href="/song/{{ song.id }}">
+                            <div class="item">
+                                {{ song.title }}
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if artists %}
+                <div class="artist-search">
+                    <p class="title">Artists:</p>
+                    {% for artist in artists %}
+                        <a href="/artist/{{ artist.id }}">
+                            <div class="item">
+                                {{ artist.name }}
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if playlists %}
+                <div class="playlist-search">
+                    <p class="title">User Playlists:</p>
+                    {% for playlist in playlists %}
+                        <a href="/user_profile/playlists/{{ playlist.id }}">
+                            <div class="item">
+                                {{ playlist.name }} |
+                                {{ playlist.owner }}
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% else %}
+            <p>Nothing found</p>
+        {% endif %}
+    </div>
+{% endblock body %}

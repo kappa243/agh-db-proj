@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from config import DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE
 from player import getSongsJson
+from sqlalchemy.orm import Query
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret-key-goes-here'
@@ -30,10 +31,9 @@ def load_user(user_id):
 
 @app.route('/')
 def index():
-    songs = Song.query.all()
+    songs = Song.query.order_by(Song.title).all()
     variables = getSongsJson(songs)
 
-    context = {'songs': songs, 'variables': variables}
     return render_template('index.html', songs=songs, variables=variables)
 
 
@@ -44,6 +44,40 @@ def add_song():
             initData(db)
 
     return render_template('add_song.html')
+
+
+@app.route('/search', methods=['GET'])
+def search():
+    songs = []
+    artists = []
+    playlists = []
+
+    if request.method == "GET":
+        if request.args.get("query") is not None:
+            query = request.args["query"]
+
+            songs = Song.query.filter(Song.title.ilike("%" + query + "%")).order_by(Song.title).all()
+            artists = Artist.query.filter(Artist.name.ilike("%" + query + "%")).order_by(Artist.name).all()
+
+    return render_template("search.html", songs=songs, artists=artists)
+
+
+@app.route('/song/<id>')
+def song(id):
+    song = Song.query.filter_by(id=id).first()
+    variables = getSongsJson([song])
+
+    return render_template("song.html", song=song, variables=variables)
+
+
+@app.route('/artist/<id>')
+def artist(id):
+    songs = Song.query.filter_by(artist_id=id).order_by(Song.title).all()
+    artist = Artist.query.filter_by(id=id).first()
+
+    variables = getSongsJson(songs)
+
+    return render_template('artist.html', songs=songs, variables=variables, artist=artist.name)
 
 
 if __name__ == "__main__":

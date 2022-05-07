@@ -3,14 +3,15 @@
         <div class="amplitude-song-container amplitude-play" data-amplitude-song-index={{ loop.index0 }}>
             <div class="song-info">
                 <div class="song-basic">
-                    <div class="song-title">{{ song.title }}</div>
-                    <div class="song-artist"> {{ song.artist.name }}</div>
+                    <a href="/song/{{ song.id }}">
+                        <div class="song-title">{{ song.title }}</div>
+                    </a>
+                    <a href="/artist/{{ song.artist.id }}">
+                        <div class="song-artist"> {{ song.artist.name }}</div>
+                    </a>
                 </div>
                 <div class="song-addit">
                     <div class="genre">{{ song.genre.name }}</div>
-                </div>
-                <div class="song-details">
-                    +details here+
                 </div>
             </div>
 
@@ -24,7 +25,6 @@
 </div>
 
 
-{#    <div id="player" style="height: 0; opacity: 0; transform: translateY(-50px); visibility: hidden;">#}
 <div id="player">
     <div id="white-player">
         <div id="white-player-center">

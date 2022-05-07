@@ -4,12 +4,6 @@ set_paused = function () {
 
 play_song = function (id) {
     Amplitude.playNow(music.songs[id]);
-
-    let player = document.getElementById("player");
-    player.style.opacity = "100%";
-    player.style.height = "200px";
-    player.style.transform = null;
-    player.style.visibility = "visible";
 }
 
 let music = {
