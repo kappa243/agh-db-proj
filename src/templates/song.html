@@ -16,10 +16,26 @@
                 </a>
             </div>
         </div>
+        <div class="song-item-options">
+            <button id="song-item-add" class="song-item-add">
+                <i class="fa fa-plus-square" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div id="song-item-playlists" class="song-item-playlists" style="display: none">
+            {% for playlist in playlists %}
+                <form method="post">
+                    <button type="submit" class="song-item-playlist" name="add-song" value="{{ playlist.id }}">
+                        {{ playlist.name }}
+                    </button>
+                </form>
+            {% endfor %}
+        </div>
     </div>
-
-
 
     {% include 'songs.html' %}
 
 {% endblock body %}
+
+{% block add_scripts %}
+    <script src="{{ url_for('static', filename='js/song.js') }}"></script>
+{% endblock add_scripts %}

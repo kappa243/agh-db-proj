@@ -28,7 +28,7 @@ def login_post():
 @auth.route('/register', methods=['POST', 'GET'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('auth.profile'))
+        return redirect(url_for('index'))
     if request.method == "POST":
         if 'register_data' in request.form:
             username = request.form['username']
@@ -59,12 +59,6 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('index'))
-
-
-@auth.route('/profile')
-@login_required
-def profile():
-    return render_template('profile.html', user=current_user)
 
 
 @login_manager.unauthorized_handler
