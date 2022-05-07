@@ -106,7 +106,7 @@ class PlaylistDetail(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     playlist_id = db.Column(db.Integer, db.ForeignKey('Playlist.id', ondelete='CASCADE'))
-    playlist = relationship("Playlist", back_populates="playlist_details")
+    playlist = relationship("Playlist")
     song_id = db.Column(db.Integer, db.ForeignKey('Song.id', ondelete='CASCADE'))
     song = relationship('Song')
 
