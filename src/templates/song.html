@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    <div class="song-item" style="text-align: center">
+        <div class="song-item-thumbnail">
+            <img src="{{ url_for('static', filename='res/' + song.img_url) }}" alt="Album image">
+        </div>
+        <div class="song-item-details">
+            <div class="song-item-title">
+                {{ song.title }}
+            </div>
+            <div class="song-item-artist">
+                <a href="/artist/{{ song.artist.id }}">
+                    {{ song.artist.name }}
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+
+    {% include 'songs.html' %}
+
+{% endblock body %}
