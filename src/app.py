@@ -94,10 +94,11 @@ def song(id):
 
             if playlist.user == user:
                 song = Song.query.get(int(id))
-                detail = PlaylistDetail(playlist, song)
+                if not PlaylistDetail.query.filter_by(playlist=playlist, song=song).first():
+                    detail = PlaylistDetail(playlist, song)
 
-                db.session.add(detail)
-                db.session.commit()
+                    db.session.add(detail)
+                    db.session.commit()
 
     return render_template("song.html", song=song, variables=variables, playlists=playlists)
 
