@@ -8,7 +8,7 @@
                     <p class="title">Songs:</p>
                     {% for song in songs %}
                         <a href="/song/{{ song.id }}">
-                            <div class="song-item item">
+                            <div class="item">
                                 {{ song.title }}
                             </div>
                         </a>
@@ -20,7 +20,7 @@
                     <p class="title">Artists:</p>
                     {% for artist in artists %}
                         <a href="/artist/{{ artist.id }}">
-                            <div class="artist-item item">
+                            <div class="item">
                                 {{ artist.name }}
                             </div>
                         </a>
@@ -32,7 +32,7 @@
                     <p class="title">User Playlists:</p>
                     {% for playlist in playlists %}
                         <a href="/user_profile/playlists/{{ playlist.id }}">
-                            <div class="playlist-item item">
+                            <div class="item">
                                 {{ playlist.name }} |
                                 {{ playlist.owner }}
                             </div>

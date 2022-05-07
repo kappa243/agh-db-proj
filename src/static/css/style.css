@@ -1,6 +1,6 @@
 :root {
-    --primary-player: #3b666e;
-    --secondary-player: #47bfdc;
+    --primary-player: #387a85;
+    --secondary-player: #4193a1;
     --unfocused-player: #E1E1E1;
     --focused-player: #a9a9a9;
 }
@@ -154,7 +154,7 @@ footer {
     justify-content: space-between;
 
     width: 300px;
-    height: 100px;
+    height: 120px;
 
     border-radius: 8px;
     padding: 20px;
@@ -173,6 +173,20 @@ footer {
 
 .song-info {
     width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.song-basic a{
+    color: black;
+    transition: 0.3s;
+}
+
+.song-basic a:hover{
+    color: var(--primary-player)
 }
 
 .song-title {
@@ -202,8 +216,6 @@ footer {
 }
 
 .song-details {
-    position: fixed;
-    bottom: 10px;
 }
 
 
@@ -690,7 +702,7 @@ div#white-player-controls div#repeat.amplitude-repeat-on {
     display: inline-block;
     margin-left: 16px;
     margin-right: 16px;
-    background: var(--primary-player);
+    background: var(--secondary-player);
     height: 60px;
     width: 60px;
     margin-top: -10px;
@@ -700,7 +712,7 @@ div#white-player-controls div#repeat.amplitude-repeat-on {
 }
 
 #playpause:hover {
-    background: var(--secondary-player);
+    background: var(--primary-player);
 }
 
 #playpause div {
@@ -774,6 +786,44 @@ div#white-player-controls div#repeat.amplitude-repeat-on {
     border: 3px var(--primary-player) solid;
     border-radius: 5px;
     padding: 10px;
+}
+
+
+.song-item {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 25px;
+}
+
+.song-item .song-item-thumbnail {
+    margin-bottom: 20px;
+}
+
+.song-item .song-item-thumbnail img {
+    height: 300px;
+    width: 300px;
+}
+
+.song-item .song-item-details .song-item-title {
+    font-size: 1.8rem;
+    font-weight: 900;
+}
+
+.song-item .song-item-details .song-item-artist {
+    font-size: 1.4rem;
+}
+
+.song-item .song-item-details .song-item-artist a{
+    color: black;
+    transition: 0.3s;
+}
+
+.song-item .song-item-details .song-item-artist a:hover{
+    color: var(--primary-player);
 }
 
 @media only screen and (max-width: 600px) {
