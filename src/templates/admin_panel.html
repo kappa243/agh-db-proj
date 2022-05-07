@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% if current_user.is_authenticated and current_user.admin %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="notification">
+            {{ messages[0] }}
+        </div>
+    {% endif %}
+{% endwith %}
+{% for user in users %}
+    <div>
+        Username: {{ user.username }} Last login: {{ user.last_login }} Registration date: {{ user.registration_date }}
+        Admin: {{ user.admin }}
+        <form method="POST">
+            <label for="username">Edit username</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter username"
+            >
+            <label for="password">Edit password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter password"
+            >
+            {% if not user.admin %}
+                <label for="grant_admin">Grant administrator</label>
+                <input
+                    type="checkbox"
+                    id="grant_admin"
+                    name="grant_admin"
+                >
+            {% else %}
+                 <label for="remove_admin">Remove administrator</label>
+                <input
+                    type="checkbox"
+                    id="remove_admin"
+                    name="remove_admin"
+                >
+            {% endif %}
+            <button type="submit" name="edit_user" value="{{ user.username }}">Edit</button>
+        </form>
+    </div>
+{% endfor %}
+{% else %}
+    <h1>You don't have admin permission</h1>
+{% endif %}
+
+{% endblock %}

@@ -22,9 +22,10 @@ login_manager.login_view = 'auth.login'
 login_manager.init_app(app)
 
 from auth import auth
-
 app.register_blueprint(auth, url_prefix='/')
 
+from admin import admin
+app.register_blueprint(admin, url_prefix='/')
 
 @login_manager.user_loader
 def load_user(user_id):

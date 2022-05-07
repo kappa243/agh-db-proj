@@ -1,5 +1,9 @@
+import datetime
+
+import sqlalchemy
 from flask import Blueprint, request, render_template, flash, redirect, url_for
 from flask_login import login_user, login_required, current_user, logout_user
+
 from models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db, login_manager
@@ -19,6 +23,8 @@ def login_post():
             if not user or not check_password_hash(user.password, password):
                 flash('Please check your login details and try again.')
                 return render_template('login.html')
+            user.last_login = datetime.datetime.utcnow()
+            db.session.commit()
             login_user(user)
             return redirect(url_for('index'))
 
@@ -45,7 +51,8 @@ def register():
             elif len(password1) < 3:
                 flash('Password must be minimum 3 characters long')
             else:
-                newUser = User(username=username, password=generate_password_hash(password1, method='sha256'))
+                newUser = User(username=username, password=generate_password_hash(password1, method='sha256'),
+                               registration_date=datetime.datetime.utcnow(), admin=False)
                 db.session.add(newUser)
                 db.session.commit()
                 print(username, password1, password2)

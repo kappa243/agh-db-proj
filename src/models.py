@@ -8,8 +8,11 @@ class User(UserMixin, db.Model):
     __tablename__ = 'User'
 
     id = db.Column(db.Integer, primary_key=True)
-    password = db.Column(db.String(1000))
     username = db.Column(db.String(50), unique=True)
+    password = db.Column(db.String(1000))
+    registration_date = db.Column(db.DateTime)
+    last_login = db.Column(db.DateTime)
+    admin = db.Column(db.Boolean)
     __table_args__ = {'extend_existing': True}
 
 
