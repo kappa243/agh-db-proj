@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="playlist-container">
+        <div class="playlist-panel">
+            <form method="post">
+                <label>
+                    Playlist name:
+                    <input type="text" name="name">
+                </label>
+                <label>
+                    Is private:
+                    <input type="checkbox" name="is_private" checked>
+                </label>
+                <button type="submit" name="add-playlist">Create playlist</button>
+            </form>
+        </div>
+        {% if playlists %}
+            <div class="playlists">
+                {% for playlist in playlists %}
+                    <div class="playlist-item">
+                        <div class="playlist-info">
+                            <a href="/playlist/{{ playlist.id }}">
+                                <div class="playlist-name">
+                                    {{ playlist.name }}
+                                </div>
+                            </a>
+                            |
+                            <div class="playlist-owner">
+                                {{ playlist.user.username }}
+                            </div>
+                        </div>
+                        <div class="playlist-status">
+                            {% if playlist.is_private %}
+                                <form method="post">
+                                    <button class="button-public-playlist" type="submit" name="public-playlist"
+                                            value="{{ playlist.id }}">
+                                        <i class="fa fa-lock" aria-hidden="true"></i>
+                                    </button>
+                                </form>
+                            {% else %}
+                                <form method="post">
+                                    <button class="button-private-playlist" type="submit" name="private-playlist"
+                                            value="{{ playlist.id }}">
+                                        <i class="fa fa-globe" aria-hidden="true"></i>
+                                    </button>
+                                </form>
+                            {% endif %}
+                            {% if playlist.user.id != user_id %}
+                                <div class="playlist-unfollow">
+                                    <form method="post">
+                                        <button class="button-follow-playlist" type="submit" name="unfollow-playlist"
+                                                value="{{ playlist.id }}">
+                                            <i class="fa fa-heart" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            {% endif %}
+                            {% if playlist.user.id == user_id %}
+                                <div class="playlist-delete">
+                                    <form method="post">
+                                        <button class="button-delete-playlist" type="submit" name="delete-playlist"
+                                                value="{{ playlist.id }}">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock body %}
