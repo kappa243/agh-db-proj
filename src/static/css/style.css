@@ -786,6 +786,8 @@ div#white-player-controls div#repeat.amplitude-repeat-on {
 }
 
 .item {
+    display: flex;
+    column-gap: 10px;
     margin-left: 20px;
     color: black;
     transition: 0.3s;
@@ -949,7 +951,7 @@ div#white-player-controls div#repeat.amplitude-repeat-on {
     height: 100%;
 }
 
-.register form button, .login form button, .playlist-panel button {
+.register form button, .login form button, .playlist-panel button, .button-submit, .button-delete {
     text-decoration: none;
     border: none;
     border-radius: 5px;
@@ -967,8 +969,16 @@ div#white-player-controls div#repeat.amplitude-repeat-on {
     width: 140px;
 }
 
-.register form button:hover, .login form button:hover, .playlist-panel button:hover {
+.register form button:hover, .login form button:hover, .playlist-panel button:hover, .button-submit:hover {
     background: var(--secondary-player);
+}
+
+.button-delete {
+    background: #9C1A1C;
+}
+
+.button-delete:hover {
+    background: #d70000;
 }
 
 .profile {
@@ -1094,6 +1104,102 @@ div#white-player-controls div#repeat.amplitude-repeat-on {
 
 .playlist-panel {
     margin-bottom: 20px;
+}
+
+.panel {
+    width: 600px;
+    height: auto;
+
+    background: white;
+    border-radius: 10px;
+    margin: 50px auto;
+    padding: 25px;
+}
+
+.panel-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    text-align: center;
+}
+
+.panel-label {
+    font-size: 1rem;
+}
+
+.panel-value {
+    font-size: 1rem;
+    font-weight: 900;
+}
+
+.panel-user {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0px 0px 5px #ababab;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 20px;
+    margin: 30px 0;
+}
+
+.panel-username {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.panel-login, .panel-register, .panel-admin {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+}
+
+.panel-register, .panel-admin {
+    margin-bottom: 10px;
+}
+
+.panel-edit {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.panel-edit .panel-edit-params {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    column-gap: 5px;
+}
+
+.panel-edit .panel-edit-params label {
+    width: 15%;
+}
+
+.panel-edit .panel-edit-params input {
+    width: 30%;
+}
+
+.panel-edit .panel-edit-admin {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.panel-submit {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    column-gap: 20px;
+    margin-top: 10px;
+}
+
+.panel-submit button {
+    width: 200px;
 }
 
 @media only screen and (max-width: 600px) {

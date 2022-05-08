@@ -1,57 +1,104 @@
 {% extends 'base.html' %}
 
 {% block body %}
-{% if current_user.is_authenticated and current_user.admin %}
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <div class="notification">
-            {{ messages[0] }}
+    {% if current_user.is_authenticated and current_user.admin %}
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="notification">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <div class="panel">
+            <div class="panel-title">
+                Admin panel
+            </div>
+            {% for edit_user in users %}
+                <div class="panel-user">
+                    <div class="panel-username">
+                        <div class="panel-label">
+                            Username:
+                            <span class="panel-value">
+                                {{ edit_user.username }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="panel-login">
+                        <div class="panel-label">
+                            Last login:
+                            <span class="panel-value">
+                                {{ edit_user.last_login }}
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="panel-register">
+                        <div class="panel-label">
+                            Registration date:
+                            <span class="panel-value">
+                                {{ edit_user.registration_date }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="panel-admin">
+                        <div class="panel-label">
+                            Admin:
+                            <span class="panel-value">
+                                {{ edit_user.admin }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <form class="panel-edit" id="update-{{ edit_user.id }}" method="POST">
+                        <div class="panel-edit-params">
+                            <label class="panel-label" for="username">Username:</label>
+                            <input
+                                    type="text"
+                                    id="username"
+                                    name="username"
+                                    placeholder="Enter username"
+                            >
+                            <label class="panel-label" for="password">Password:</label>
+                            <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Enter password"
+                            >
+                        </div>
+                        <div class="panel-edit-admin">
+                            {% if not edit_user.admin %}
+                                <label class="panel-label" for="grant_admin">Grant administrator</label>
+                                <input
+                                        type="checkbox"
+                                        id="grant_admin"
+                                        name="grant_admin"
+                                >
+                            {% else %}
+                                <label class="panel-label" for="remove_admin">Remove administrator</label>
+                                <input
+                                        type="checkbox"
+                                        id="remove_admin"
+                                        name="remove_admin"
+                                >
+                            {% endif %}
+                        </div>
+
+                    </form>
+                    <form id="delete-{{ edit_user.id }}" method="POST"></form>
+                    <div class="panel-submit">
+                        <button class="button-submit" form="update-{{ edit_user.id }}" type="submit" name="edit_user"
+                                value="{{ edit_user.username }}">
+                            Edit user
+                        </button>
+                        <button class="button-delete" form="delete-{{ edit_user.id }}" type="submit" name="delete"
+                                value="{{ edit_user.username }}">
+                            Delete user
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     {% endif %}
-{% endwith %}
-{% for user in users %}
-    <div>
-        Username: {{ user.username }} Last login: {{ user.last_login }} Registration date: {{ user.registration_date }}
-        Admin: {{ user.admin }}
-        <form method="POST">
-            <label for="username">Edit username</label>
-            <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="Enter username"
-            >
-            <label for="password">Edit password</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Enter password"
-            >
-            {% if not user.admin %}
-                <label for="grant_admin">Grant administrator</label>
-                <input
-                    type="checkbox"
-                    id="grant_admin"
-                    name="grant_admin"
-                >
-            {% else %}
-                 <label for="remove_admin">Remove administrator</label>
-                <input
-                    type="checkbox"
-                    id="remove_admin"
-                    name="remove_admin"
-                >
-            {% endif %}
-            <button type="submit" name="edit_user" value="{{ user.username }}">Edit</button>
-        </form>
-        <form method="POST">
-            <button type="submit" name="delete" value="{{ user.username }}">Delete user</button>
-        </form>
-    </div>
-{% endfor %}
-{% else %}
-    <h1>You don't have admin permission</h1>
-{% endif %}
 
 {% endblock %}

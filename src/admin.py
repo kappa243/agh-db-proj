@@ -10,6 +10,10 @@ admin = Blueprint('admin', __name__)
 @admin.route('/admin', methods=['POST', 'GET'])
 @login_required
 def admin_panel():
+    if current_user.is_authenticated:
+        user = User.query.get(int(current_user.get_id()))
+        if not user.admin:
+            return redirect(url_for('index'))
     users = User.query.order_by(User.id).all()
     if request.method == 'POST':
         if 'edit_user' in request.form:

@@ -24,14 +24,26 @@ login_manager.login_view = 'auth.login'
 login_manager.init_app(app)
 
 from auth import auth
+
 app.register_blueprint(auth, url_prefix='/')
 
 from admin import admin
+
 app.register_blueprint(admin, url_prefix='/')
+
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+
+@app.context_processor
+def utility_processor():
+    user = None
+    if current_user.is_authenticated:
+        user = User.query.get(int(current_user.get_id()))
+
+    return dict(user=user)
 
 
 @app.route('/')

@@ -31,23 +31,24 @@
                 <div class="playlist-search">
                     <p class="title">User Playlists:</p>
                     {% for playlist in playlists %}
-                        <div class="item">
-                            <a href="/playlist/{{ playlist.id }}">
+                        <a href="/playlist/{{ playlist.id }}">
+                            <div class="item">
                                 <div class="playlist-name">
                                     {{ playlist.name }}
                                 </div>
-                            </a>
-                            <div class="playlist-owner">
-                                {{ playlist.user.username }}
+                                |
+                                <div class="playlist-owner">
+                                    {{ playlist.user.username }}
+                                </div>
+                                <div class="playlist-status">
+                                    {% if playlist.is_private %}
+                                        <i class="fa fa-lock" aria-hidden="true"></i>
+                                    {% else %}
+                                        <i class="fa fa-globe" aria-hidden="true"></i>
+                                    {% endif %}
+                                </div>
                             </div>
-                            <div class="playlist-status">
-                                {% if playlist.is_private %}
-                                    <i class="fa fa-lock" aria-hidden="true"></i>
-                                {% else %}
-                                    <i class="fa fa-globe" aria-hidden="true"></i>
-                                {% endif %}
-                            </div>
-                        </div>
+                        </a>
                     {% endfor %}
                 </div>
             {% endif %}
