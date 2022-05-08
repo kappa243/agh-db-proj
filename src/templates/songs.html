@@ -11,14 +11,16 @@
                     </a>
                 </div>
                 <div class="song-addit">
-                    <div class="genre">{{ song.genre.name }}</div>
+{#                    <div class="genre">{{ song.genre.type }}</div>#}
+                    <div class="song-views">
+                        <i class="fa fa-play" aria-hidden="true"></i>
+                        {{ length(song.views) }}
+                    </div>
                 </div>
             </div>
 
             <div class="song-thumbnail">
                 <img src="{{ url_for('static', filename='res/' + song.img_url) }}" alt="album image">
-                <div class="activity">
-                </div>
             </div>
         </div>
     {% endfor %}

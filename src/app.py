@@ -1,6 +1,6 @@
 from itertools import chain
 
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, Response
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager, login_required, current_user
@@ -16,8 +16,9 @@ db = SQLAlchemy(app)
 
 migrate = Migrate(app, db)
 
-from models import Song, Artist, Genre, User, Playlist, PlaylistDetail, PlaylistFollow
-from scripts.load_data import initData
+from models import Song, Artist, Genre, User, Playlist, PlaylistDetail, PlaylistFollow, SongView
+
+# from scripts.load_data import initData
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -43,7 +44,13 @@ def utility_processor():
     if current_user.is_authenticated:
         user = User.query.get(int(current_user.get_id()))
 
-    return dict(user=user)
+    def length(tab):
+        sum = 0
+        for t in tab:
+            sum += t.count
+        return sum
+
+    return dict(user=user, length=length)
 
 
 @app.route('/')
@@ -114,6 +121,28 @@ def song(id):
                     db.session.commit()
 
     return render_template("song.html", song=song, variables=variables, playlists=playlists)
+
+
+@app.route('/song/view', methods=['POST'])
+@login_required
+def song_view():
+    song = Song.query.get(int(request.values.get('song')))
+    if song is None:
+        return Response(status=404)
+
+    user = User.query.get(int(current_user.get_id()))
+
+    view = SongView.query.filter(SongView.user == user).filter(SongView.song == song).first()
+    if view:
+        view.inc_count()
+        db.session.commit()
+    else:
+        view = SongView(user=user, song=song)
+        view.inc_count()
+        db.session.add(view)
+        db.session.commit()
+
+    return Response(status=200)
 
 
 @app.route('/artist/<id>')

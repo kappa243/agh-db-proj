@@ -33,6 +33,8 @@ class Song(db.Model):
     genre = relationship('Genre', backref=backref('parent', uselist=False))
     duration = db.Column(db.Integer)
 
+    views = relationship('SongView', back_populates="song")
+
     def __init__(self, title, artist, song_url, img_url, genre, duration):
         self.title = title
         self.artist = artist
@@ -85,6 +87,27 @@ class Genre(db.Model):
                f"[{self.id}]>"
 
     __table_args__ = {'extend_existing': True}
+
+
+class SongView(db.Model):
+    __tablename__ = 'SongView'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('User.id', ondelete='CASCADE'))
+    user = relationship('User')
+    song_id = db.Column(db.Integer, db.ForeignKey('Song.id', ondelete='CASCADE'))
+    song = relationship('Song', back_populates='views')
+    count = db.Column(db.Integer, default=0)
+
+    def __init__(self, user, song):
+        self.user = user
+        self.user_id = user.id
+        self.song = song
+        self.song_id = song.id
+        self.count = 0
+
+    def inc_count(self):
+        self.count += 1
 
 
 class Playlist(db.Model):

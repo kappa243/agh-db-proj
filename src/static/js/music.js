@@ -10,7 +10,9 @@ let music = {
     songs: {},
 }
 
+
 let lock = false;
+let last_index = null;
 
 music.init = function () {
 
@@ -27,7 +29,21 @@ music.init = function () {
         let amplitudeSettings = {
             'songs': amplitudeSongs,
             'volume': 50,
-            'start_song': null
+            'start_song': null,
+            'callbacks': {
+                loadstart: function () {
+                    if (last_index != null) {
+                        $.ajax({
+                            type: "POST",
+                            url: '/song/view',
+                            data: {
+                                song: Amplitude.getSongsState()[Amplitude.getActiveIndex()].id
+                            }
+                        });
+                    }
+                    last_index = Amplitude.getActiveIndex()
+                }
+            }
         };
 
         for (let key in amplitudeSettings.playlists) {

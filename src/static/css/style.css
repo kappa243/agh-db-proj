@@ -221,6 +221,13 @@ footer {
     font-weight: lighter;
 }
 
+.song-views {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+    font-size: 1rem;
+}
+
 .song-thumbnail {
     display: flex;
     flex-direction: column;
