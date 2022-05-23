@@ -1,3 +1,4 @@
+import time
 from itertools import chain
 
 from flask import Flask, render_template, url_for, request, redirect, Response
@@ -18,7 +19,7 @@ migrate = Migrate(app, db)
 
 from models import Song, Artist, Genre, User, Playlist, PlaylistDetail, PlaylistFollow, SongView
 
-# from scripts.load_data import initData
+from scripts.load_data import initData
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -110,7 +111,7 @@ def song(id):
     if request.method == "POST":
         if "add-song" in request.form:
             playlist_id = request.form['add-song']
-            playlist = Playlist.query.get(int(playlist_id))
+            playlist = db.session.query(Playlist).with_for_update().get(int(playlist_id))
 
             if playlist.user == user:
                 song = Song.query.get(int(id))
@@ -132,7 +133,7 @@ def song_view():
 
     user = User.query.get(int(current_user.get_id()))
 
-    view = SongView.query.filter(SongView.user == user).filter(SongView.song == song).first()
+    view = db.session.query(SongView).filter(SongView.user == user).filter(SongView.song == song).with_for_update().first()
     if view:
         view.inc_count()
         db.session.commit()
@@ -175,8 +176,10 @@ def playlists():
 
         elif 'delete-playlist' in request.form:
             playlist_id = int(request.form['delete-playlist'])
-            playlist = Playlist.query.get(playlist_id)
 
+            playlist = db.session.query(Playlist).with_for_update().get(playlist_id)
+
+            # time.sleep(10)
             if playlist.user == user:
                 db.session.delete(playlist)
                 db.session.commit()
@@ -196,13 +199,13 @@ def playlists():
             playlist = Playlist.query.get(playlist_id)
 
             if playlist.user != user:
-                follow = PlaylistFollow.query.filter_by(user=user, playlist=playlist).first()
+                follow = db.session.query(PlaylistFollow).filter_by(user=user, playlist=playlist).with_for_update().first()
                 db.session.delete(follow)
                 db.session.commit()
 
         elif 'public-playlist' in request.form:
             playlist_id = int(request.form['public-playlist'])
-            playlist = Playlist.query.get(playlist_id)
+            playlist = db.session.query(Playlist).with_for_update().get(playlist_id)
 
             if playlist.user == user:
                 playlist.is_private = False
@@ -210,7 +213,7 @@ def playlists():
 
         elif 'private-playlist' in request.form:
             playlist_id = int(request.form['private-playlist'])
-            playlist = Playlist.query.get(playlist_id)
+            playlist = db.session.query(Playlist).with_for_update().get(playlist_id)
 
             if playlist.user == user:
                 playlist.is_private = True
@@ -231,7 +234,7 @@ def playlist(id):
     if request.method == 'POST':
         if 'delete-playlist' in request.form:
             playlist_id = int(request.form['delete-playlist'])
-            playlist = Playlist.query.get(playlist_id)
+            playlist = db.session.query(Playlist).with_for_update().get(playlist_id)
 
             if playlist.user == user:
                 db.session.delete(playlist)
@@ -252,13 +255,13 @@ def playlist(id):
             playlist = Playlist.query.get(playlist_id)
 
             if playlist.user != user:
-                follow = PlaylistFollow.query.filter_by(user=user, playlist=playlist).first()
+                follow = db.session.query(PlaylistFollow).filter_by(user=user, playlist=playlist).with_for_update().first()
                 db.session.delete(follow)
                 db.session.commit()
 
         elif 'public-playlist' in request.form:
             playlist_id = int(request.form['public-playlist'])
-            playlist = Playlist.query.get(playlist_id)
+            playlist = db.session.query(Playlist).with_for_update().get(playlist_id)
 
             if playlist.user == user:
                 playlist.is_private = False
@@ -266,7 +269,7 @@ def playlist(id):
 
         elif 'private-playlist' in request.form:
             playlist_id = int(request.form['private-playlist'])
-            playlist = Playlist.query.get(playlist_id)
+            playlist = db.session.query(Playlist).with_for_update().get(playlist_id)
 
             if playlist.user == user:
                 playlist.is_private = True

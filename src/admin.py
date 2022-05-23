@@ -18,7 +18,7 @@ def admin_panel():
     if request.method == 'POST':
         if 'edit_user' in request.form:
             old_username = request.form['edit_user']
-            user = User.query.filter_by(username=old_username).first()
+            user = db.session.query(User).filter_by(username=old_username).with_for_update().first()
             username = request.form['username']
             password = request.form['password']
             if len(username) > 0:
@@ -34,7 +34,7 @@ def admin_panel():
                 user.admin = False
         if 'delete' in request.form:
             old_username = request.form['delete']
-            User.query.filter_by(username=old_username).delete()
+            User.query.filter_by(username=old_username).with_for_update().delete()
         db.session.commit()
         return redirect(url_for('admin.admin_panel'))
     return render_template('admin_panel.html', users=users)

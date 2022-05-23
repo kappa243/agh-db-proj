@@ -18,7 +18,7 @@ def login_post():
             username = request.form['username']
             password = request.form['password']
 
-            user = User.query.filter_by(username=username).first()
+            user = db.session.query(User).filter_by(username=username).with_for_update().first()
 
             if not user or not check_password_hash(user.password, password):
                 flash('Please check your login details and try again.')
